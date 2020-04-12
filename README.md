@@ -29,3 +29,5 @@ You can configure some default behaviours in user preferences
 * Publish Major and Minor version changes too.
 * Select specific package.json instead of just finding it (in the case there are multiple libraries).
 * Support for publish multiple libraries not just the main one.
+* Support for having a latest tag which points to the last published release.
+* Support for `-preview` version notation.
