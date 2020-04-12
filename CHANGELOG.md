@@ -1,3 +1,7 @@
+# 0.0.5
+
+* OMG! Added missing assembly definition
+
 # 0.0.4
 
 * Commit message can be configured in preferences
