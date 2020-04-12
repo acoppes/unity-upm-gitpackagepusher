@@ -8,7 +8,7 @@ The project itself is published using its own code.
 
 # Install latest version
 
-Just open Package Manager and add git URL `git@github.com:acoppes/upmgitpusher.git#com.gemserk.upmgitpusher-0.0.5`
+Just open Package Manager and add git URL `git@github.com:acoppes/upmgitpusher.git#com.gemserk.upmgitpusher-0.0.6`
 
 # How to use
 
