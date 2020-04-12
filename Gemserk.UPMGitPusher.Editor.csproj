@@ -60,6 +60,7 @@
   <ItemGroup>
      <Compile Include="Assets\Gemserk.UPMGitPusher\Editor\GitHelper.cs" />
      <Compile Include="Assets\Gemserk.UPMGitPusher\Editor\GitPusherSettingsProvider.cs" />
+     <Compile Include="Assets\Gemserk.UPMGitPusher\Editor\Preferences.cs" />
      <Compile Include="Assets\Gemserk.UPMGitPusher\Editor\PublishVersionMenuItem.cs" />
      <None Include="Assets\Gemserk.UPMGitPusher\Editor\Gemserk.UPMGitPusher.Editor.asmdef" />
  <Reference Include="UnityEditor.UI">

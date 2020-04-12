@@ -1,3 +1,7 @@
+# 0.0.6
+
+* Separated Preferences static class from settings provider.
+
 # 0.0.5
 
 * OMG! Added missing assembly definition
