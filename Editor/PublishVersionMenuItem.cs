@@ -51,12 +51,12 @@ namespace Gemserk.UPMGitPusher.Editor
 
         private static void CommitChanges(PublishData publishData)
         {
-            if (!GitPusherSettingsProvider.automaticCommit)
+            if (!Preferences.automaticCommit)
                 return;
             
             Debug.Log("Committing version change.");
 
-            var commitMessage = GitPusherSettingsProvider.commitmMessage;
+            var commitMessage = Preferences.commitmMessage;
             
             commitMessage = commitMessage.Replace("{PREVIOUS_VERSION}", publishData.version.ToString());
             commitMessage = commitMessage.Replace("{NEW_VERSION}", publishData.newVersion.ToString());
@@ -64,7 +64,7 @@ namespace Gemserk.UPMGitPusher.Editor
             var gitCommand = $"commit {publishData.pathToJson} -m \"{commitMessage}\"";
             
             Debug.Log($"Executing: git {gitCommand}");
-            if (!GitPusherSettingsProvider.dryRun)
+            if (!Preferences.dryRun)
             {
                 GitHelper.ExecuteCommand(gitCommand);
             }
@@ -82,7 +82,7 @@ namespace Gemserk.UPMGitPusher.Editor
                 $"\"{publishData.pacakge.version}\"", 
                 $"\"{publishData.newVersion}\"");
 
-            if (!GitPusherSettingsProvider.dryRun)
+            if (!Preferences.dryRun)
             {
                 File.WriteAllText(publishData.pathToJson, newText);
             
@@ -103,7 +103,7 @@ namespace Gemserk.UPMGitPusher.Editor
                 $"subtree push --prefix {publishData.path} {origin} {publishData.pacakge.name}-{publishData.pacakge.version}";
             
             Debug.Log($"Executing: git {gitCommand}");
-            if (!GitPusherSettingsProvider.dryRun)
+            if (!Preferences.dryRun)
             {
                 GitHelper.ExecuteCommand(gitCommand);
             }
