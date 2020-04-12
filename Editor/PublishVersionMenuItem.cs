@@ -24,14 +24,9 @@ namespace Gemserk.UPMGitPusher.Editor
     
     public static class PublishVersionMenuItem
     {
-        private static bool dryRun => EditorPrefs.GetBool(GitPusherSettingsProvider.PreferenceKeyDryRun, false);
-        
         [MenuItem("Assets/UPM Git Package/Publish Patch")]
         public static void PublishPatchVersion()
         {
-            // TODO: show some message while everything is being executed....
-            // maybe some progress...
-
             try
             {
                 EditorUtility.DisplayProgressBar("Publish Patch", "Starting publishing patch...", 0.0f);
@@ -56,14 +51,14 @@ namespace Gemserk.UPMGitPusher.Editor
 
         private static void CommitChanges(PublishData publishData)
         {
-            // TODO: get the default commit message from EditorPreferences 
-            // TODO: flag to have or not this automatic step or not.
+            if (!GitPusherSettingsProvider.automaticCommit)
+                return;
             
             Debug.Log("Committing version change.");
             
             var gitCommand = $"commit {publishData.pathToJson} -m \"Updated version from {publishData.version} to {publishData.newVersion}\"";
             
-            if (!dryRun)
+            if (!GitPusherSettingsProvider.dryRun)
             {
                 GitHelper.ExecuteCommand(gitCommand);
             }
@@ -85,7 +80,7 @@ namespace Gemserk.UPMGitPusher.Editor
                 $"\"{publishData.pacakge.version}\"", 
                 $"\"{publishData.newVersion}\"");
 
-            if (!dryRun)
+            if (!GitPusherSettingsProvider.dryRun)
             {
                 File.WriteAllText(publishData.pathToJson, newText);
             
@@ -105,7 +100,7 @@ namespace Gemserk.UPMGitPusher.Editor
             var gitCommand =
                 $"subtree push --prefix {publishData.path} {origin} {publishData.pacakge.name}-{publishData.pacakge.version}";
             
-            if (!dryRun)
+            if (!GitPusherSettingsProvider.dryRun)
             {
                 GitHelper.ExecuteCommand(gitCommand);
             }
