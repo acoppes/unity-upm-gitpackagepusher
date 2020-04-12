@@ -1,3 +1,7 @@
+# 0.0.3
+
+* Configuration to disable/enable automatic commit after push
+
 # 0.0.2
 
 * Added display dialog to know something is happening
