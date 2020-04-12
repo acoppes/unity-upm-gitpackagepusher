@@ -55,8 +55,13 @@ namespace Gemserk.UPMGitPusher.Editor
                 return;
             
             Debug.Log("Committing version change.");
+
+            var commitMessage = GitPusherSettingsProvider.commitmMessage;
             
-            var gitCommand = $"commit {publishData.pathToJson} -m \"Updated version from {publishData.version} to {publishData.newVersion}\"";
+            commitMessage = commitMessage.Replace("{PREVIOUS_VERSION}", publishData.version.ToString());
+            commitMessage = commitMessage.Replace("{NEW_VERSION}", publishData.newVersion.ToString());
+            
+            var gitCommand = $"commit {publishData.pathToJson} -m \"{commitMessage}\"";
             
             if (!GitPusherSettingsProvider.dryRun)
             {

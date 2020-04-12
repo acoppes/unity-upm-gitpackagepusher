@@ -1,3 +1,7 @@
+# 0.0.4
+
+* Commit message can be configured in preferences
+
 # 0.0.3
 
 * Configuration to disable/enable automatic commit after push
