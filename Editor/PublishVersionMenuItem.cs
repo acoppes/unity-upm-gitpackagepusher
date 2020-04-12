@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using UnityEditor;
 using UnityEngine;
 
@@ -37,6 +38,10 @@ namespace Gemserk.UPMGitPusher.Editor
     
     public static class PublishVersionMenuItem
     {
+        // TODO: turn on/off dry run from editor preferences
+        
+        private const bool dryRun = true;
+        
         [MenuItem("Assets/UPM Git Package/Publish Patch")]
         public static void PublishPatchVersion()
         {
@@ -56,30 +61,68 @@ namespace Gemserk.UPMGitPusher.Editor
 
         private static void CommitChanges(PublishData publishData)
         {
-            Debug.Log("Commit changes... (not implemented yet)");
-            
             // TODO: get the default commit message from EditorPreferences 
+            
+            // TODO: flag to have or not this automatic step or not.
+            
+            Debug.Log("Committing version change.");
             
             var gitCommand = $"commit {publishData.pathToJson} -m 'Updated version from {publishData.version} to {publishData.newVersion}'";
             
-            Debug.Log($"Executing: git {gitCommand}");
+            if (!dryRun)
+            {
+                GitHelper.ExecuteCommand(gitCommand);
+            }
+            else
+            {
+                Debug.Log($"Executing: git {gitCommand}");
+            }
         }
 
         private static void UpdatePackageVersion(PublishData publishData)
         {
-            Debug.Log("Updating package version... (not implemented yet)");
-
             var version = publishData.version;
             
             var newVersion = new Version(version.Major, version.Minor, version.Build + 1);
-            Debug.Log($"Changing version to {newVersion}");
+            Debug.Log($"Changing version from {version} to {newVersion}");
 
             publishData.pacakge.version = newVersion.ToString();
             publishData.newVersion = newVersion;
+
+            if (!dryRun)
+            {
+                var packageAsset = AssetDatabase.LoadAssetAtPath<TextAsset>(publishData.pathToJson);
+                var newText = packageAsset.text.Replace(publishData.version.ToString(), publishData.newVersion.ToString());
+          
+                File.WriteAllText(publishData.pathToJson, newText);
             
-            // TODO: write new pacakge.json file...
+                EditorUtility.SetDirty(packageAsset);
+                AssetDatabase.Refresh();
+            }
+            else
+            {
+                Debug.Log($"Writing new JSON:\n{JsonUtility.ToJson(publishData.pacakge, true)}");
+            }
         }
 
+        public static void PushSubTree(PublishData publishData)
+        {
+            // TODO: configure origin in editor preferences
+            const string origin = "origin";
+
+            var gitCommand =
+                $"subtree push --prefix {publishData.path} {origin} {publishData.pacakge.name}-{publishData.pacakge.version}";
+            
+            if (!dryRun)
+            {
+                GitHelper.ExecuteCommand(gitCommand);
+            }
+            else
+            {
+                Debug.Log($"Executing: git {gitCommand}");
+            }
+        }
+        
         private static PublishData GetPackageData()
         {
             // warning, there could be multiple packages, even package.txt
@@ -105,12 +148,6 @@ namespace Gemserk.UPMGitPusher.Editor
                 version = Version.Parse(packageData.version)
             };
         }
-        
-        public static void PushSubTree(PublishData publishData)
-        {
-            // TODO: configure origin in editor preferences
-            const string origin = "origin";
-            Debug.Log($"git subtree push --prefix {publishData.path} {origin} {publishData.pacakge.name}-{publishData.pacakge.version}");
-        }
+
     }
 }
