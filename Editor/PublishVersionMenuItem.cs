@@ -63,13 +63,10 @@ namespace Gemserk.UPMGitPusher.Editor
             
             var gitCommand = $"commit {publishData.pathToJson} -m \"{commitMessage}\"";
             
+            Debug.Log($"Executing: git {gitCommand}");
             if (!GitPusherSettingsProvider.dryRun)
             {
                 GitHelper.ExecuteCommand(gitCommand);
-            }
-            else
-            {
-                Debug.Log($"Executing: git {gitCommand}");
             }
         }
 
@@ -105,13 +102,10 @@ namespace Gemserk.UPMGitPusher.Editor
             var gitCommand =
                 $"subtree push --prefix {publishData.path} {origin} {publishData.pacakge.name}-{publishData.pacakge.version}";
             
+            Debug.Log($"Executing: git {gitCommand}");
             if (!GitPusherSettingsProvider.dryRun)
             {
                 GitHelper.ExecuteCommand(gitCommand);
-            }
-            else
-            {
-                Debug.Log($"Executing: git {gitCommand}");
             }
         }
         
@@ -128,9 +122,6 @@ namespace Gemserk.UPMGitPusher.Editor
             var path = AssetDatabase.GUIDToAssetPath(guids[0]);
             var packageTextAsset = AssetDatabase.LoadAssetAtPath<TextAsset>(path);
             var packageData = JsonUtility.FromJson<PackageData>(packageTextAsset.text);
-            
-            // Testing we read everything without problem.
-            Debug.Log(JsonUtility.ToJson(packageData, true));
 
             return new PublishData
             {
