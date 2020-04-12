@@ -26,6 +26,7 @@ You can configure some default behaviours in user preferences
 
 # TODO
 
+* Preference to configure branch name format, now it is being forced to `{package.name}-{package.version}`.
 * Publish Major and Minor version changes too.
 * Select specific package.json instead of just finding it (in the case there are multiple libraries).
 * Support for publish multiple libraries not just the main one.
