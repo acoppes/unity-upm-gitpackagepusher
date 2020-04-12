@@ -16,24 +16,10 @@ namespace Gemserk.UPMGitPusher.Editor
         public PackageData pacakge;
     }
 
-    public class AuthorData
-    {
-        public string name;
-        public string email;
-        public string url;
-    }
-    
     public class PackageData
     {
         public string name;
         public string version;
-        public string displayName;
-        public string description;
-        public string unity;
-        public string unityRelease;
-        // TODO: dependencies...
-        public string[] keywords;
-        public AuthorData author;
     }
     
     public static class PublishVersionMenuItem
@@ -83,17 +69,16 @@ namespace Gemserk.UPMGitPusher.Editor
         {
             var version = publishData.version;
             
-            var newVersion = new Version(version.Major, version.Minor, version.Build + 1);
-            Debug.Log($"Changing version from {version} to {newVersion}");
+            publishData.newVersion = new Version(version.Major, version.Minor, version.Build + 1);
+            Debug.Log($"Changing version from {version} to {publishData.newVersion}");
 
-            publishData.pacakge.version = newVersion.ToString();
-            publishData.newVersion = newVersion;
+            var packageAsset = AssetDatabase.LoadAssetAtPath<TextAsset>(publishData.pathToJson);
+            var newText = packageAsset.text.Replace(
+                $"\"{publishData.pacakge.version}\"", 
+                $"\"{publishData.newVersion}\"");
 
             if (!dryRun)
             {
-                var packageAsset = AssetDatabase.LoadAssetAtPath<TextAsset>(publishData.pathToJson);
-                var newText = packageAsset.text.Replace(publishData.version.ToString(), publishData.newVersion.ToString());
-          
                 File.WriteAllText(publishData.pathToJson, newText);
             
                 EditorUtility.SetDirty(packageAsset);
@@ -101,7 +86,7 @@ namespace Gemserk.UPMGitPusher.Editor
             }
             else
             {
-                Debug.Log($"Writing new JSON:\n{JsonUtility.ToJson(publishData.pacakge, true)}");
+                Debug.Log($"Writing new JSON:\n{newText}");
             }
         }
 
