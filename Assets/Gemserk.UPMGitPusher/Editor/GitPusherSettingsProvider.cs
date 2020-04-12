@@ -30,8 +30,8 @@ namespace Gemserk.UPMGitPusher.Editor
                 label = "UPM Git Pusher",
                 guiHandler = (searchContext) =>
                 {
-                    TogglePreference(PreferenceKeyDryRun, "Dry run", false);
-                    TogglePreference(PreferenceKeyAutoCommit, "Automatically commit new version update", true);
+                    TogglePreference("Dry run", PreferenceKeyDryRun, false);
+                    TogglePreference("Automatically commit new version update", PreferenceKeyAutoCommit, true);
                 },
                 keywords = new HashSet<string>(new[] { "Git", "UPM" })
             };
