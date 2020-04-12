@@ -24,9 +24,7 @@ namespace Gemserk.UPMGitPusher.Editor
     
     public static class PublishVersionMenuItem
     {
-        // TODO: turn on/off dry run from editor preferences
-        
-        private const bool dryRun = true;
+        private static bool dryRun => EditorPrefs.GetBool(GitPusherSettingsProvider.PreferenceKeyDryRun, false);
         
         [MenuItem("Assets/UPM Git Package/Publish Patch")]
         public static void PublishPatchVersion()

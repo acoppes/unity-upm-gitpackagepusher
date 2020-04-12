@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Gemserk.UPMGitPusher\Editor\GitHelper.cs" />
+     <Compile Include="Assets\Gemserk.UPMGitPusher\Editor\GitPusherSettingsProvider.cs" />
      <Compile Include="Assets\Gemserk.UPMGitPusher\Editor\PublishVersionMenuItem.cs" />
  <Reference Include="UnityEditor.TestRunner">
  <HintPath>C:/workspace/UnityPackageManagerGitPusher/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
