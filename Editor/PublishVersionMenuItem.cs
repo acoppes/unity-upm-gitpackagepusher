@@ -103,7 +103,7 @@ namespace Gemserk.UPMGitPusher.Editor
             const string origin = "origin";
 
             var gitCommand =
-                $"subtree push -f --prefix {publishData.path} {origin} {publishData.pacakge.name}-{publishData.pacakge.version}";
+                $"subtree push --prefix {publishData.path} {origin} {publishData.pacakge.name}-{publishData.pacakge.version}";
             
             if (!dryRun)
             {
