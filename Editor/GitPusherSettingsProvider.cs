@@ -7,6 +7,9 @@ namespace Gemserk.UPMGitPusher.Editor
     {
         public const string PreferenceKeyDryRun = "UPMGitPusher.DryRun";
         
+        // TODO: add force push option
+        // TODO: allow configure remote (default is origin)
+        
         [SettingsProvider]
         public static SettingsProvider CreateMyCustomSettingsProvider()
         {

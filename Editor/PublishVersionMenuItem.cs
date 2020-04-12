@@ -29,11 +29,18 @@ namespace Gemserk.UPMGitPusher.Editor
         [MenuItem("Assets/UPM Git Package/Publish Patch")]
         public static void PublishPatchVersion()
         {
+            // TODO: show some message while everything is being executed....
+            // maybe some progress...
+
             try
             {
+                EditorUtility.DisplayProgressBar("Publish Patch", "Starting publishing patch...", 0.0f);
                 var publishData = GetPackageData();
+                EditorUtility.DisplayProgressBar("Publish Patch", "Git Sub Tree", 0.33f);
                 PushSubTree(publishData);
+                EditorUtility.DisplayProgressBar("Publish Patch", "Updating package.json", 0.66f);
                 UpdatePackageVersion(publishData);
+                EditorUtility.DisplayProgressBar("Publish Patch", "Git Commit", 1.0f);
                 CommitChanges(publishData);
             }
             catch (Exception e)
@@ -41,17 +48,20 @@ namespace Gemserk.UPMGitPusher.Editor
                 EditorUtility.DisplayDialog("Error", e.Message, "ok");
                 throw e;
             }
+            finally
+            {
+                EditorUtility.ClearProgressBar();
+            }
         }
 
         private static void CommitChanges(PublishData publishData)
         {
             // TODO: get the default commit message from EditorPreferences 
-            
             // TODO: flag to have or not this automatic step or not.
             
             Debug.Log("Committing version change.");
             
-            var gitCommand = $"commit {publishData.pathToJson} -m 'Updated version from {publishData.version} to {publishData.newVersion}'";
+            var gitCommand = $"commit {publishData.pathToJson} -m \"Updated version from {publishData.version} to {publishData.newVersion}\"";
             
             if (!dryRun)
             {
@@ -90,11 +100,10 @@ namespace Gemserk.UPMGitPusher.Editor
 
         public static void PushSubTree(PublishData publishData)
         {
-            // TODO: configure origin in editor preferences
             const string origin = "origin";
 
             var gitCommand =
-                $"subtree push --prefix {publishData.path} {origin} {publishData.pacakge.name}-{publishData.pacakge.version}";
+                $"subtree push -f --prefix {publishData.path} {origin} {publishData.pacakge.name}-{publishData.pacakge.version}";
             
             if (!dryRun)
             {
