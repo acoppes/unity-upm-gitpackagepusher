@@ -45,7 +45,7 @@ namespace Gemserk.UPMGitPusher.Editor
             }
             // Log any errors.
             if (errorOutput != "") {
-                Debug.LogError("Git Error: " + errorOutput);
+                Debug.LogWarning(errorOutput);
             }
 
             return output;  // Return the output from git.
