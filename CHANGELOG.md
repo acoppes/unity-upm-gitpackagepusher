@@ -1,3 +1,3 @@
 # 0.0.1
 
-* Initial version of the project
+* Menu item to publish to git
