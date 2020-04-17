@@ -1,24 +1,30 @@
+# 0.0.7
+
+## Fixed
+
+- Avoid finding other text assets (like c# scripts for example) with "package" in their name.
+
 # 0.0.6
 
-* Separated Preferences static class from settings provider.
+- Separated Preferences static class from settings provider.
 
 # 0.0.5
 
-* OMG! Added missing assembly definition
+- OMG! Added missing assembly definition
 
 # 0.0.4
 
-* Commit message can be configured in preferences
+- Commit message can be configured in preferences
 
 # 0.0.3
 
-* Configuration to disable/enable automatic commit after push
+- Configuration to disable/enable automatic commit after push
 
 # 0.0.2
 
-* Added display dialog to know something is happening
-* Fixes for commit message to use proper quote character
+- Added display dialog to know something is happening
+- Fixes for commit message to use proper quote character
 
 # 0.0.1
 
-* Menu item to publish to git
+- Menu item to publish to git

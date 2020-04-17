@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using UnityEditor;
+using UnityEditor.VersionControl;
 using UnityEngine;
 
 namespace Gemserk.UPMGitPusher.Editor
@@ -109,7 +111,7 @@ namespace Gemserk.UPMGitPusher.Editor
             }
         }
         
-        private static PublishData GetPackageData()
+        public static PublishData GetPackageData()
         {
             // warning, there could be multiple packages, even package.txt
             
@@ -119,7 +121,11 @@ namespace Gemserk.UPMGitPusher.Editor
                throw new Exception("Failed to get package.json");
             }
 
-            var path = AssetDatabase.GUIDToAssetPath(guids[0]);
+            var paths = guids
+                .Where(g => AssetDatabase.GUIDToAssetPath(g).EndsWith("package.json"))
+                .Select(AssetDatabase.GUIDToAssetPath).ToList();
+
+            var path = paths[0];
             var packageTextAsset = AssetDatabase.LoadAssetAtPath<TextAsset>(path);
             var packageData = JsonUtility.FromJson<PackageData>(packageTextAsset.text);
 
