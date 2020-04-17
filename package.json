@@ -1,6 +1,6 @@
 {
     "name": "com.gemserk.upmgitpusher",
-    "version": "0.0.7",
+    "version": "0.0.8",
     "displayName": "UnityPackageManagerGitPusher",
     "description": "Just a simple tool integrated to Unity to publish your packages in a way UPM supports",
     "unity": "2018.1",
