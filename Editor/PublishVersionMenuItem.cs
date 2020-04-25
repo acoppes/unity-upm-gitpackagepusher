@@ -69,7 +69,7 @@ namespace Gemserk.UPMGitPusher.Editor
             if (!Preferences.dryRun)
             {
                 GitHelper.ExecuteCommand(gitCommand);
-                GitHelper.ExecuteCommand($"tag {publishData.newVersion}");
+                GitHelper.ExecuteCommand($"tag {publishData.version}");
             }
         }
 
