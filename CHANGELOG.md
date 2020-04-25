@@ -1,3 +1,7 @@
+# 0.0.11
+
+- Fixed git tag to use the previous version.
+
 # 0.0.10
 
 - Added git tag the version changed commit. 
