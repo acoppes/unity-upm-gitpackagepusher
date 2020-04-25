@@ -111,7 +111,7 @@ namespace Gemserk.UPMGitPusher.Editor
             Debug.Log(GitHelper.ExecuteCommand($"branch -d {branchName} &> /dev/null", Preferences.dryRun));
             var output = GitHelper.ExecuteCommand($"subtree split -P {publishData.path} -b {branchName}", Preferences.dryRun);
             Debug.Log(output);
-            Debug.Log(GitHelper.ExecuteCommand($"tag {publishData.pacakge.name}-{publishData.pacakge.version} ${output}", Preferences.dryRun));
+            Debug.Log(GitHelper.ExecuteCommand($"tag {publishData.pacakge.name}-{publishData.pacakge.version} {output}", Preferences.dryRun));
             Debug.Log(GitHelper.ExecuteCommand($"push --tags -f -u {origin} {branchName}", Preferences.dryRun));
         }
         
