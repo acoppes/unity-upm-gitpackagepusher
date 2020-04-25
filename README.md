@@ -10,7 +10,7 @@ The project itself is published using its own code.
 
 # Install latest version
 
-Just open Package Manager and add git URL `git@github.com:acoppes/upmgitpusher.git#com.gemserk.upmgitpusher-0.0.11`
+Download from ![OpenUPM](https://openupm.com/packages/com.gemserk.upmgitpusher/) or just open Package Manager and add git URL `git@github.com:acoppes/upmgitpusher.git#com.gemserk.upmgitpusher-0.0.16`
 
 # How to use
 
