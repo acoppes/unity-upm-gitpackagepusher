@@ -97,18 +97,22 @@ namespace Gemserk.UPMGitPusher.Editor
             }
         }
 
-        public static void PushSubTree(PublishData publishData)
+        private static void PushSubTree(PublishData publishData)
         {
             const string origin = "origin";
 
-            var gitCommand =
-                $"subtree push --prefix {publishData.path} {origin} {publishData.pacakge.name}-{publishData.pacakge.version}";
-            
-            Debug.Log($"Executing: git {gitCommand}");
-            if (!Preferences.dryRun)
-            {
-                GitHelper.ExecuteCommand(gitCommand);
-            }
+            // git branch -d upm &> /dev/null || echo upm branch not found
+            // git subtree split -P Assets/Gemserk.UPMGitPusher -b com.gemserk.upmgitpusher
+            // git tag com.gemserk.upmgitpusher-test 80f1cf8fe0af896d04a3c3c7033e1eede8256331
+            // git push --tags -f -u origin com.gemserk.upmgitpusher
+
+            var branchName = publishData.pacakge.name;
+
+            Debug.Log(GitHelper.ExecuteCommand($"branch -d {branchName} &> /dev/null", Preferences.dryRun));
+            var output = GitHelper.ExecuteCommand($"subtree split -P {publishData.path} -b {branchName}", Preferences.dryRun);
+            Debug.Log(output);
+            Debug.Log(GitHelper.ExecuteCommand($"tag {publishData.pacakge.name}-{publishData.pacakge.version} ${output}", Preferences.dryRun));
+            Debug.Log(GitHelper.ExecuteCommand($"push --tags -f -u {origin} {branchName}", Preferences.dryRun));
         }
         
         public static PublishData GetPackageData()

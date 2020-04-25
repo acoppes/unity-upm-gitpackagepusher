@@ -6,10 +6,15 @@ namespace Gemserk.UPMGitPusher.Editor
 {
     public static class GitHelper
     {
-        public static string ExecuteCommand(string gitCommand) {
+        public static string ExecuteCommand(string gitCommand, bool dryRun = false) {
             // Strings that will catch the output from our process.
             var output = "no-git";
             var errorOutput = "no-git";
+
+            if (dryRun)
+            {
+                return $"git {gitCommand}";
+            }
 
             // Set up our processInfo to run the git command and log to output and errorOutput.
             var processInfo = new ProcessStartInfo("git", @gitCommand) {
