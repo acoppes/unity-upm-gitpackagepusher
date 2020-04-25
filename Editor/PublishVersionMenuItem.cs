@@ -69,7 +69,7 @@ namespace Gemserk.UPMGitPusher.Editor
             if (!Preferences.dryRun)
             {
                 GitHelper.ExecuteCommand(gitCommand);
-                GitHelper.ExecuteCommand($"tag {publishData.version}");
+                GitHelper.ExecuteCommand($"tag master-{publishData.version}");
             }
         }
 
@@ -115,7 +115,7 @@ namespace Gemserk.UPMGitPusher.Editor
             
             var output = GitHelper.ExecuteCommand($"subtree split -P {publishData.path} -b {branchName}", Preferences.dryRun);
             Debug.Log(output);
-            Debug.Log(GitHelper.ExecuteCommand($"tag {publishData.pacakge.name}-{publishData.pacakge.version} {output.Trim()}", Preferences.dryRun));
+            Debug.Log(GitHelper.ExecuteCommand($"tag {publishData.pacakge.version} {output.Trim()}", Preferences.dryRun));
             Debug.Log(GitHelper.ExecuteCommand($"push --tags -f -u {origin} {branchName}", Preferences.dryRun));
         }
         

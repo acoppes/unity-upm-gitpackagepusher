@@ -18,5 +18,10 @@
       "name": "Ariel Coppes",
       "email": "ariel.coppes@gmail.com",
       "url": "https://blog.gemserk.com"
+    },
+    "homepage": "https://github.com/acoppes/upmgitpusher",
+    "repository": {
+      "type": "git",
+      "url": "git@github.com:acoppes/upmgitpusher.git"
     }
   }
