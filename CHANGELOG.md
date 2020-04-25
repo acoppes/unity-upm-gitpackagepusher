@@ -1,3 +1,7 @@
+# 0.0.13
+
+- Just adding example gif to README.md
+
 # 0.0.11
 
 - Fixed git tag to use the previous version.
