@@ -1,8 +1,6 @@
 # 0.0.7
 
-## Fixed
-
-- Avoid finding other text assets (like c# scripts for example) with "package" in their name.
+- Fixed finding other text assets with "package" in their name ((like c# scripts for example).
 
 # 0.0.6
 
