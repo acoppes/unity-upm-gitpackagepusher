@@ -1,3 +1,7 @@
+# 0.0.16
+
+- Changing to use semver for release tags and master-{tag} for master branch tags.
+
 # 0.0.13
 
 - Just adding example gif to README.md
