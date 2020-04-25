@@ -1,3 +1,7 @@
+# 0.0.9
+
+- Changed to release to only one branch but using tags for different versions
+
 # 0.0.7
 
 - Fixed finding other text assets with "package" in their name ((like c# scripts for example).
