@@ -108,10 +108,18 @@ namespace Gemserk.UPMGitPusher.Editor
 
             var branchName = publishData.pacakge.name;
 
-            Debug.Log(GitHelper.ExecuteCommand($"branch -d {branchName} &> /dev/null", Preferences.dryRun));
+            try
+            {
+                Debug.Log(GitHelper.ExecuteCommand($"branch -d {branchName}", Preferences.dryRun));
+            }
+            catch
+            {
+                Debug.Log($"Failed to delete previous branch {branchName}");
+            }
+            
             var output = GitHelper.ExecuteCommand($"subtree split -P {publishData.path} -b {branchName}", Preferences.dryRun);
             Debug.Log(output);
-            Debug.Log(GitHelper.ExecuteCommand($"tag {publishData.pacakge.name}-{publishData.pacakge.version} {output}", Preferences.dryRun));
+            Debug.Log(GitHelper.ExecuteCommand($"tag {publishData.pacakge.name}-{publishData.pacakge.version} {output.Trim()}", Preferences.dryRun));
             Debug.Log(GitHelper.ExecuteCommand($"push --tags -f -u {origin} {branchName}", Preferences.dryRun));
         }
         
