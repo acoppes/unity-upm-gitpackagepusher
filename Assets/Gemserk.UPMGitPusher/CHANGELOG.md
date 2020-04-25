@@ -1,3 +1,7 @@
+# 0.0.10
+
+- Added git tag the version changed commit. 
+
 # 0.0.9
 
 - Changed to release to only one branch but using tags for different versions

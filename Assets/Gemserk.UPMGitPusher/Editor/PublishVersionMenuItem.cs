@@ -69,6 +69,7 @@ namespace Gemserk.UPMGitPusher.Editor
             if (!Preferences.dryRun)
             {
                 GitHelper.ExecuteCommand(gitCommand);
+                GitHelper.ExecuteCommand($"tag {publishData.newVersion}");
             }
         }
 
@@ -100,11 +101,6 @@ namespace Gemserk.UPMGitPusher.Editor
         private static void PushSubTree(PublishData publishData)
         {
             const string origin = "origin";
-
-            // git branch -d upm &> /dev/null || echo upm branch not found
-            // git subtree split -P Assets/Gemserk.UPMGitPusher -b com.gemserk.upmgitpusher
-            // git tag com.gemserk.upmgitpusher-test 80f1cf8fe0af896d04a3c3c7033e1eede8256331
-            // git push --tags -f -u origin com.gemserk.upmgitpusher
 
             var branchName = publishData.pacakge.name;
 
