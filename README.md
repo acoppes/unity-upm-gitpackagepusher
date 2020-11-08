@@ -1,5 +1,7 @@
 # Unity Package Manager Git Pusher
 
+Given a folder with the unity package layout, this Unity plugin will allow you to automatically push a version of it to Github and create specific branches and tags with only its contents in order to use it later as a upm dependency for another Unity project.
+
 [![openupm](https://img.shields.io/npm/v/com.gemserk.upmgitpusher?label=openupm&registry_uri=https://package.openupm.com)](https://openupm.com/packages/com.gemserk.upmgitpusher/)
 
 ![Demo](images/example.gif?raw=true "Demo")
