@@ -8,6 +8,32 @@ Given a folder with the unity package layout, this Unity plugin will allow you t
 
 This is a simple tool to automatically push your code into a structure interpreted by UPM. It uses a special branch for all the stripped code using the package name, and it creates a tag with the package.name-version based on the current package.json data.
 
+For example, if you have a project `com.gemserk.myproject` in version `0.1.0` with the following structure: 
+
+```
+Root/
+    Assets/
+        MyCustomLibrary/
+            package.json
+            MyCustomLibrary.asmdef
+            Code/
+                MyCode.cs
+    OtherScripts/
+```
+
+It will create a branch named `com.gemserk.myproject` with only the code related to the package, and with the following content
+
+```
+Root/
+    MyCustomLibrary/
+        package.json
+        MyCustomLibrary.asmdef
+        Code/
+            MyCode.cs
+```
+
+And a tag `com.gemserk.myproject-0.1.0` pointing to current version, and will increase version patch by one in master.
+
 The project itself is published using its own code.
 
 # Install latest version
