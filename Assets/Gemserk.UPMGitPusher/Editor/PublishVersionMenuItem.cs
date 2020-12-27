@@ -2,7 +2,6 @@
 using System.IO;
 using System.Linq;
 using UnityEditor;
-using UnityEditor.VersionControl;
 using UnityEngine;
 
 namespace Gemserk.UPMGitPusher.Editor

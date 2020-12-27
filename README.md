@@ -38,7 +38,7 @@ The project itself is published using its own code.
 
 # Install
 
-Download from ![OpenUPM](https://openupm.com/packages/com.gemserk.upmgitpusher/) or just open Package Manager and add git URL `https://github.com/acoppes/upmgitpusher.git#com.gemserk.upmgitpusher` for latest version or check [tags](tags) for previous versions.
+Download from ![OpenUPM](https://openupm.com/packages/com.gemserk.upmgitpusher/) or just open Package Manager and add git URL `https://github.com/acoppes/upmgitpusher.git#com.gemserk.upmgitpusher` for latest version or check [tags](https://github.com/acoppes/unity-upm-gitpackagepusher/tags) for previous versions.
 
 # How to use
 
