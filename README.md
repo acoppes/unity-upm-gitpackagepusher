@@ -36,9 +36,9 @@ And a tag `com.gemserk.myproject-0.1.0` pointing to current version, and will in
 
 The project itself is published using its own code.
 
-# Install latest version
+# Install
 
-Download from ![OpenUPM](https://openupm.com/packages/com.gemserk.upmgitpusher/) or just open Package Manager and add git URL `https://github.com/acoppes/upmgitpusher.git#com.gemserk.upmgitpusher`
+Download from ![OpenUPM](https://openupm.com/packages/com.gemserk.upmgitpusher/) or just open Package Manager and add git URL `https://github.com/acoppes/upmgitpusher.git#com.gemserk.upmgitpusher` for latest version or check [tags](tags) for previous versions.
 
 # How to use
 
