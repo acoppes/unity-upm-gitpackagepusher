@@ -4,9 +4,7 @@
 
 ![Demo](images/example.gif?raw=true "Demo")
 
-This is a simple tool to automatically push your code into a structure interpreted by UPM.
-
-It is similar to maven release plugin in some way.
+This is a simple tool to automatically push your code into a structure interpreted by UPM. It uses a special branch for all the stripped code using the package name, and it creates a tag with the package.name-version based on the current package.json data.
 
 The project itself is published using its own code.
 
