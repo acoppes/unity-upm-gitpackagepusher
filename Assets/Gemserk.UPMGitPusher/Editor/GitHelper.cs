@@ -6,22 +6,34 @@ namespace Gemserk.UPMGitPusher.Editor
 {
     public static class GitHelper
     {
-        public static string ExecuteCommand(string gitCommand, bool dryRun = false) {
+        public struct Options
+        {
+            public static Options Default = new Options
+            {
+                dryRun = false,
+                redirectOutput = false
+            };
+            
+            public bool dryRun;
+            public bool redirectOutput;
+        }
+        
+        public static string ExecuteCommand(string gitCommand, Options options) {
             // Strings that will catch the output from our process.
             var output = "no-git";
             var errorOutput = "no-git";
 
-            if (dryRun)
+            if (options.dryRun)
             {
                 return $"git {gitCommand}";
             }
 
             // Set up our processInfo to run the git command and log to output and errorOutput.
             var processInfo = new ProcessStartInfo("git", @gitCommand) {
-                CreateNoWindow = true,          // We want no visible pop-ups
-                UseShellExecute = false,        // Allows us to redirect input, output and error streams
-                RedirectStandardOutput = true,  // Allows us to read the output stream
-                RedirectStandardError = true    // Allows us to read the error stream
+                CreateNoWindow = false,          // We want no visible pop-ups
+                UseShellExecute = !options.redirectOutput,        // Allows us to redirect input, output and error streams
+                RedirectStandardOutput = options.redirectOutput,  // Allows us to read the output stream
+                RedirectStandardError = options.redirectOutput    // Allows us to read the error stream
             };
 
             // Set up the Process
@@ -38,16 +50,30 @@ namespace Gemserk.UPMGitPusher.Editor
             }
 
             // Read the results back from the process so we can get the output and check for errors
-            output = process.StandardOutput.ReadToEnd();
-            errorOutput = process.StandardError.ReadToEnd();
 
             process.WaitForExit();  // Make sure we wait till the process has fully finished.
+            
+            if (processInfo.RedirectStandardOutput)
+            {
+                output = process.StandardOutput.ReadToEnd();
+            }
+            else
+            {
+                output = string.Empty;
+            }
+            
+            if (processInfo.RedirectStandardError)
+            {
+                errorOutput = process.StandardError.ReadToEnd();
+            }
+            
             process.Close();        // Close the process ensuring it frees it resources.
 
             // Check for failure due to no git setup in the project itself or other fatal errors from git.
-            if (output.Contains("fatal") || output == "no-git") {
+            if (output.Contains("fatal") || output.Equals("no-git")) {
                 throw new Exception("Command: git " + @gitCommand + " Failed\n" + output + errorOutput);
             }
+            
             // Log any errors.
             if (errorOutput != "") {
                 Debug.LogWarning(errorOutput);
