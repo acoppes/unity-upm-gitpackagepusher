@@ -65,10 +65,11 @@ namespace Gemserk.UPMGitPusher.Editor
             var gitCommand = $"commit {publishData.pathToJson} -m \"{commitMessage}\"";
             
             Debug.Log($"Executing: git {gitCommand}");
+            
             if (!Preferences.dryRun)
             {
-                GitHelper.ExecuteCommand(gitCommand);
-                GitHelper.ExecuteCommand($"tag master-{publishData.version}");
+                GitHelper.ExecuteCommand(gitCommand, GitHelper.Options.Default);
+                GitHelper.ExecuteCommand($"tag master-{publishData.version}", GitHelper.Options.Default);
             }
         }
 
@@ -105,17 +106,40 @@ namespace Gemserk.UPMGitPusher.Editor
 
             try
             {
-                Debug.Log(GitHelper.ExecuteCommand($"branch -d {branchName}", Preferences.dryRun));
+                GitHelper.ExecuteCommand($"branch -d {branchName}", new GitHelper.Options
+                {
+                    dryRun = Preferences.dryRun,
+                    redirectOutput = false
+                });
             }
             catch
             {
                 Debug.Log($"Failed to delete previous branch {branchName}");
             }
             
-            var output = GitHelper.ExecuteCommand($"subtree split -P {publishData.path} -b {branchName}", Preferences.dryRun);
-            Debug.Log(output);
-            Debug.Log(GitHelper.ExecuteCommand($"tag {publishData.pacakge.version} {output.Trim()}", Preferences.dryRun));
-            Debug.Log(GitHelper.ExecuteCommand($"push --tags -f -u {origin} {branchName}", Preferences.dryRun));
+            GitHelper.ExecuteCommand($"subtree split -P {publishData.path} -b {branchName}", new GitHelper.Options
+            {
+                dryRun = Preferences.dryRun,
+                redirectOutput = false
+            });
+            
+            var commitNumber = GitHelper.ExecuteCommand($"rev-parse {branchName}", new GitHelper.Options
+            {
+                dryRun = Preferences.dryRun,
+                redirectOutput = true
+            });
+
+            GitHelper.ExecuteCommand($"tag {publishData.pacakge.version} {commitNumber.Trim()}", new GitHelper.Options
+            {
+                dryRun = Preferences.dryRun,
+                redirectOutput = false
+            });
+
+            GitHelper.ExecuteCommand($"push --tags -f -u {origin} {branchName}", new GitHelper.Options
+            {
+                dryRun = Preferences.dryRun,
+                redirectOutput = false
+            });
         }
         
         public static PublishData GetPackageData()

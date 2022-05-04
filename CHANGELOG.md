@@ -1,3 +1,7 @@
+# 0.0.18
+
+- Changed to show the terminal output when processing the split subtree.
+
 # 0.0.16
 
 - Changing to use semver for release tags and master-{tag} for master branch tags.
