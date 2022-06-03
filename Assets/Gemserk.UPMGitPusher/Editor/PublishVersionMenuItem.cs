@@ -26,10 +26,26 @@ namespace Gemserk.UPMGitPusher.Editor
     
     public static class PublishVersionMenuItem
     {
+        private const string PackageFileName = "package.json";
+        
         [MenuItem("Assets/UPM Git Package/Publish Patch")]
         public static void PublishPatchVersion()
         {
-            PublishPatchVersion(GetAllPackagesPublishData());
+            if (Selection.activeObject is TextAsset textAsset)
+            {
+                var path = AssetDatabase.GetAssetPath(textAsset);
+                if (path.EndsWith(PackageFileName))
+                {
+                    PublishPatchVersion(new List<PublishData>
+                    {
+                        GetPublishData(path, textAsset)
+                    });
+                }
+            }
+            else
+            {
+                PublishPatchVersion(GetAllPackagesPublishData());
+            }
         }
         
         private static void PublishPatchVersion(IEnumerable<PublishData> publishDataList)
@@ -160,7 +176,7 @@ namespace Gemserk.UPMGitPusher.Editor
             }
 
             var paths = guids
-                .Where(g => AssetDatabase.GUIDToAssetPath(g).EndsWith("package.json"))
+                .Where(g => AssetDatabase.GUIDToAssetPath(g).EndsWith(PackageFileName))
                 .Select(AssetDatabase.GUIDToAssetPath).ToList();
 
             var publishDataList = new List<PublishData>();
@@ -168,18 +184,22 @@ namespace Gemserk.UPMGitPusher.Editor
             foreach (var path in paths)
             {
                 var packageTextAsset = AssetDatabase.LoadAssetAtPath<TextAsset>(path);
-                var packageData = JsonUtility.FromJson<PackageData>(packageTextAsset.text);
-
-                publishDataList.Add(new PublishData
-                {
-                    pacakge = packageData,
-                    path = path.Replace("package.json", ""),
-                    pathToJson = path,
-                    version = Version.Parse(packageData.version)
-                });
+                publishDataList.Add(GetPublishData(path, packageTextAsset));
             }
 
             return publishDataList;
+        }
+
+        private static PublishData GetPublishData(string path, TextAsset textAsset)
+        {
+            var packageData = JsonUtility.FromJson<PackageData>(textAsset.text);
+            return new PublishData
+            {
+                pacakge = packageData,
+                path = path.Replace(PackageFileName, ""),
+                pathToJson = path,
+                version = Version.Parse(packageData.version)
+            };
         }
 
     }

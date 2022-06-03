@@ -1,6 +1,7 @@
 # 0.0.19
 
 - Changed to search for a list of packages to export.
+- Export only selected package.json if file selected in editor.
 
 # 0.0.18
 
