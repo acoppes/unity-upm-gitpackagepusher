@@ -31,25 +31,46 @@ namespace Gemserk.UPMGitPusher.Editor
         [MenuItem("Assets/UPM Git Package/Publish Patch")]
         public static void PublishPatchVersion()
         {
+            IEnumerable<PublishData> publishDataList = new List<PublishData>();
+            
             if (Selection.activeObject is TextAsset textAsset)
             {
                 var path = AssetDatabase.GetAssetPath(textAsset);
                 if (path.EndsWith(PackageFileName))
                 {
                     Debug.Log($"Exporting package from selection");
-                    var publishData = GetPublishData(path, textAsset);
-                    
-                    PublishPatchVersion(new List<PublishData>
+                    publishDataList = new List<PublishData>
                     {
-                        publishData
-                    });
+                        GetPublishData(path, textAsset)
+                    };
                 }
+            } else if (Selection.activeObject is PublishDataAsset publishDataAsset)
+            {
+                if (publishDataAsset.disabled)
+                {
+                    return;
+                }
+
+                publishDataList = publishDataAsset.packageFiles
+                    .Select(p => GetPublishData(AssetDatabase.GetAssetPath(p), p)).ToList();
             }
             else
             {
-                Debug.Log($"Exporting packages from all package.json using auto search");
-                PublishPatchVersion(GetAllPackagesPublishData());
+                if (Preferences.AutoSearchPackages)
+                {
+                    // first search fo publish data assets and then export?
+                    Debug.Log($"Exporting packages from all package.json using auto search");
+                    publishDataList = GetAllPackagesPublishData();
+                }
+                else
+                {
+                    EditorUtility.DisplayDialog("Error",
+                        "Automatic package search is disabled, a package.json or a PackageDataAsset must be selected in order to export.", "OK");
+                    return;
+                }
             }
+            
+            PublishPatchVersion(publishDataList);
         }
         
         private static void PublishPatchVersion(IEnumerable<PublishData> publishDataList)
@@ -85,7 +106,7 @@ namespace Gemserk.UPMGitPusher.Editor
             
             Debug.Log("Committing version change.");
 
-            var commitMessage = Preferences.commitmMessage;
+            var commitMessage = Preferences.commitMessage;
             
             commitMessage = commitMessage.Replace("{PREVIOUS_VERSION}", publishData.version.ToString());
             commitMessage = commitMessage.Replace("{NEW_VERSION}", publishData.newVersion.ToString());
