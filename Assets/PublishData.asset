@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: PublishData
   m_EditorClassIdentifier: 
   disabled: 0
-  packageFiles: []
+  packageFiles:
+  - {fileID: 4900000, guid: f71af8fffca87a3418d8b3283689cd38, type: 3}
