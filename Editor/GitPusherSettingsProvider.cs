@@ -32,7 +32,9 @@ namespace Gemserk.UPMGitPusher.Editor
                     TogglePreference("Automatically commit new version update", Preferences.PreferenceKeyAutoCommit, 
                         Preferences.automaticCommit);
                     StringPreference("Commit Message", Preferences.PreferenceKeyCommitMessage, 
-                        Preferences.commitmMessage);
+                        Preferences.commitMessage);
+                    TogglePreference("Automatic package search", Preferences.PreferenceKeyAutoSearchPackages, 
+                        Preferences.AutoSearchPackages);
                 },
                 keywords = new HashSet<string>(new[] { "Git", "UPM" })
             };
