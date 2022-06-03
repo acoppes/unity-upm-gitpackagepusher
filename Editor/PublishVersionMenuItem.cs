@@ -36,10 +36,12 @@ namespace Gemserk.UPMGitPusher.Editor
                 var path = AssetDatabase.GetAssetPath(textAsset);
                 if (path.EndsWith(PackageFileName))
                 {
-                    Debug.Log($"Exporting selected Package {path}");
+                    Debug.Log($"Exporting package from selection");
+                    var publishData = GetPublishData(path, textAsset);
+                    
                     PublishPatchVersion(new List<PublishData>
                     {
-                        GetPublishData(path, textAsset)
+                        publishData
                     });
                 }
             }
@@ -54,7 +56,7 @@ namespace Gemserk.UPMGitPusher.Editor
         {
             foreach (var publishData in publishDataList)  
             {
-                Debug.Log($"Exporting Package {publishData.path}");
+                Debug.Log($"Exporting Package {publishData.package.name}-{publishData.package.version}");
                 try
                 {
                     EditorUtility.DisplayProgressBar("Publish Patch", "Git Sub Tree", 0.33f);
@@ -172,7 +174,11 @@ namespace Gemserk.UPMGitPusher.Editor
         {
             // warning, there could be multiple packages, even package.txt
             
-            var guids = AssetDatabase.FindAssets("t:TextAsset package");
+            var guids = AssetDatabase.FindAssets("t:TextAsset package", new []
+            {
+                "Assets"
+            });
+            
             if (guids.Length == 0)
             {
                throw new Exception("Failed to get package.json");
