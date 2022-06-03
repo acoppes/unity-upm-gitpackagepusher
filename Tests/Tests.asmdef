@@ -3,7 +3,8 @@
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "Gemserk.UPMGitPusher.Editor"
+        "Gemserk.UPMGitPusher.Editor",
+        "Gemserk.UPMGitPusher"
     ],
     "includePlatforms": [
         "Editor"

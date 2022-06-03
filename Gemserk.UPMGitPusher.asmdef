@@ -1,16 +1,12 @@
 {
-    "name": "Gemserk.UPMGitPusher.Editor",
-    "references": [
-        "GUID:59d09c11a3a798a43bed7de55ebf106a"
-    ],
-    "includePlatforms": [
-        "Editor"
-    ],
+    "name": "Gemserk.UPMGitPusher",
+    "references": [],
+    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],
-    "autoReferenced": true,
+    "autoReferenced": false,
     "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false

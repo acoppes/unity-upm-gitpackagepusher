@@ -1,3 +1,7 @@
+# 0.0.19
+
+- Changed to search for a list of packages to export.
+
 # 0.0.18
 
 - Changed to show the terminal output when processing the split subtree.
