@@ -15,7 +15,7 @@ namespace Tests
         {
             try
             {
-                var packageData = PublishVersionMenuItem.GetPackageData();
+                var publishDataList = PublishVersionMenuItem.GetAllPackagesPublishData();
             }
             catch
             {

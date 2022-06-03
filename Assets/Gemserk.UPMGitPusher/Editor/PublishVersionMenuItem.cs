@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEditor;
@@ -28,25 +29,31 @@ namespace Gemserk.UPMGitPusher.Editor
         [MenuItem("Assets/UPM Git Package/Publish Patch")]
         public static void PublishPatchVersion()
         {
-            try
+            PublishPatchVersion(GetAllPackagesPublishData());
+        }
+        
+        private static void PublishPatchVersion(IEnumerable<PublishData> publishDataList)
+        {
+            foreach (var publishData in publishDataList)  
             {
-                EditorUtility.DisplayProgressBar("Publish Patch", "Starting publishing patch...", 0.0f);
-                var publishData = GetPackageData();
-                EditorUtility.DisplayProgressBar("Publish Patch", "Git Sub Tree", 0.33f);
-                PushSubTree(publishData);
-                EditorUtility.DisplayProgressBar("Publish Patch", "Updating package.json", 0.66f);
-                UpdatePackageVersion(publishData);
-                EditorUtility.DisplayProgressBar("Publish Patch", "Git Commit", 1.0f);
-                CommitChanges(publishData);
-            }
-            catch (Exception e)
-            {
-                EditorUtility.DisplayDialog("Error", e.Message, "ok");
-                throw e;
-            }
-            finally
-            {
-                EditorUtility.ClearProgressBar();
+                try
+                {
+                    EditorUtility.DisplayProgressBar("Publish Patch", "Git Sub Tree", 0.33f);
+                    PushSubTree(publishData);
+                    EditorUtility.DisplayProgressBar("Publish Patch", "Updating package.json", 0.66f);
+                    UpdatePackageVersion(publishData);
+                    EditorUtility.DisplayProgressBar("Publish Patch", "Git Commit", 1.0f);
+                    CommitChanges(publishData);
+                }
+                catch (Exception e)
+                {
+                    EditorUtility.DisplayDialog("Error", e.Message, "ok");
+                    throw e;
+                }
+                finally
+                {
+                    EditorUtility.ClearProgressBar();
+                }
             }
         }
 
@@ -141,8 +148,8 @@ namespace Gemserk.UPMGitPusher.Editor
                 redirectOutput = false
             });
         }
-        
-        public static PublishData GetPackageData()
+
+        public static IEnumerable<PublishData> GetAllPackagesPublishData()
         {
             // warning, there could be multiple packages, even package.txt
             
@@ -156,17 +163,23 @@ namespace Gemserk.UPMGitPusher.Editor
                 .Where(g => AssetDatabase.GUIDToAssetPath(g).EndsWith("package.json"))
                 .Select(AssetDatabase.GUIDToAssetPath).ToList();
 
-            var path = paths[0];
-            var packageTextAsset = AssetDatabase.LoadAssetAtPath<TextAsset>(path);
-            var packageData = JsonUtility.FromJson<PackageData>(packageTextAsset.text);
+            var publishDataList = new List<PublishData>();
 
-            return new PublishData
+            foreach (var path in paths)
             {
-                pacakge = packageData,
-                path = path.Replace("package.json", ""),
-                pathToJson = path,
-                version = Version.Parse(packageData.version)
-            };
+                var packageTextAsset = AssetDatabase.LoadAssetAtPath<TextAsset>(path);
+                var packageData = JsonUtility.FromJson<PackageData>(packageTextAsset.text);
+
+                publishDataList.Add(new PublishData
+                {
+                    pacakge = packageData,
+                    path = path.Replace("package.json", ""),
+                    pathToJson = path,
+                    version = Version.Parse(packageData.version)
+                });
+            }
+
+            return publishDataList;
         }
 
     }
