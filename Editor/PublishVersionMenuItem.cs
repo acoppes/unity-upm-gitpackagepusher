@@ -15,7 +15,7 @@ namespace Gemserk.UPMGitPusher.Editor
         public Version version;
         public Version newVersion;
         
-        public PackageData pacakge;
+        public PackageData package;
     }
 
     public class PackageData
@@ -36,6 +36,7 @@ namespace Gemserk.UPMGitPusher.Editor
                 var path = AssetDatabase.GetAssetPath(textAsset);
                 if (path.EndsWith(PackageFileName))
                 {
+                    Debug.Log($"Exporting selected Package {path}");
                     PublishPatchVersion(new List<PublishData>
                     {
                         GetPublishData(path, textAsset)
@@ -44,6 +45,7 @@ namespace Gemserk.UPMGitPusher.Editor
             }
             else
             {
+                Debug.Log($"Exporting packages from all package.json using auto search");
                 PublishPatchVersion(GetAllPackagesPublishData());
             }
         }
@@ -52,6 +54,7 @@ namespace Gemserk.UPMGitPusher.Editor
         {
             foreach (var publishData in publishDataList)  
             {
+                Debug.Log($"Exporting Package {publishData.path}");
                 try
                 {
                     EditorUtility.DisplayProgressBar("Publish Patch", "Git Sub Tree", 0.33f);
@@ -105,7 +108,7 @@ namespace Gemserk.UPMGitPusher.Editor
 
             var packageAsset = AssetDatabase.LoadAssetAtPath<TextAsset>(publishData.pathToJson);
             var newText = packageAsset.text.Replace(
-                $"\"{publishData.pacakge.version}\"", 
+                $"\"{publishData.package.version}\"", 
                 $"\"{publishData.newVersion}\"");
 
             if (!Preferences.dryRun)
@@ -125,7 +128,7 @@ namespace Gemserk.UPMGitPusher.Editor
         {
             const string origin = "origin";
 
-            var branchName = publishData.pacakge.name;
+            var branchName = publishData.package.name;
 
             try
             {
@@ -152,7 +155,7 @@ namespace Gemserk.UPMGitPusher.Editor
                 redirectOutput = true
             });
 
-            GitHelper.ExecuteCommand($"tag {publishData.pacakge.version} {commitNumber.Trim()}", new GitHelper.Options
+            GitHelper.ExecuteCommand($"tag {publishData.package.version} {commitNumber.Trim()}", new GitHelper.Options
             {
                 dryRun = Preferences.dryRun,
                 redirectOutput = false
@@ -195,7 +198,7 @@ namespace Gemserk.UPMGitPusher.Editor
             var packageData = JsonUtility.FromJson<PackageData>(textAsset.text);
             return new PublishData
             {
-                pacakge = packageData,
+                package = packageData,
                 path = path.Replace(PackageFileName, ""),
                 pathToJson = path,
                 version = Version.Parse(packageData.version)
