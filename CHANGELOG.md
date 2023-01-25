@@ -1,3 +1,7 @@
+# 0.0.20
+
+- Added publish button to data asset
+
 # 0.0.19
 
 - Changed to search for a list of packages to export.
