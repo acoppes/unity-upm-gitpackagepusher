@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Gemserk.UPMGitPusher.Editor
+namespace Gemserk.UPMGitPusher
 {
     [CreateAssetMenu(menuName = "Assets/UPM Git Package/Create Publish Data")]
     public class PublishDataAsset : ScriptableObject
