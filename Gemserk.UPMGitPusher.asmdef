@@ -1,5 +1,6 @@
 {
     "name": "Gemserk.UPMGitPusher",
+    "rootNamespace": "Gemserk.UPMGitPusher",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
