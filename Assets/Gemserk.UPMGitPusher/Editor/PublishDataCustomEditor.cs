@@ -14,8 +14,8 @@ namespace Gemserk.UPMGitPusher.Editor
             
             if (GUILayout.Button("Publish"))
             {
-                if (EditorUtility.DisplayDialog("Confirm", "This will run git to publish different branches with package code, continue?", 
-                        "Yes", "Cancel"))
+                if (EditorUtility.DisplayDialog("Confirm publish", "This will run git to publish different branches with package code, continue?", 
+                        "Yes", "No"))
                 {
                     PublishVersionMenuItem.PublishPatchVersion();
                 }
