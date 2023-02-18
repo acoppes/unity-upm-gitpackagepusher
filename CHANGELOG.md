@@ -1,3 +1,7 @@
+# 0.0.21 
+
+- Display dialog to confirm publish packages.
+
 # 0.0.20
 
 - Added publish button to data asset
