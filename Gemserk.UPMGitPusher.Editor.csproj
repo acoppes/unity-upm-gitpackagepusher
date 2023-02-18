@@ -41,11 +41,11 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Gemserk.UPMGitPusher\Editor\PublishVersionMenuItem.cs" />
-     <Compile Include="Assets\Gemserk.UPMGitPusher\Editor\Preferences.cs" />
      <Compile Include="Assets\Gemserk.UPMGitPusher\Editor\GitHelper.cs" />
+     <Compile Include="Assets\Gemserk.UPMGitPusher\Editor\PublishVersionMenuItem.cs" />
      <Compile Include="Assets\Gemserk.UPMGitPusher\Editor\GitPusherSettingsProvider.cs" />
      <Compile Include="Assets\Gemserk.UPMGitPusher\Editor\PublishDataCustomEditor.cs" />
+     <Compile Include="Assets\Gemserk.UPMGitPusher\Editor\Preferences.cs" />
      <None Include="Assets\Gemserk.UPMGitPusher\Editor\Gemserk.UPMGitPusher.Editor.asmdef" />
      <Folder Include="Assets\Gemserk.UPMGitPusher\Editor" />
      <Reference Include="UnityEngine">
@@ -642,6 +642,12 @@
      <Reference Include="System.Xml.XPath.XDocument">
      <HintPath>C:\UnityHub\2020.3.43f1\Editor\Data\MonoBleedingEdge\lib\mono\4.7.1-api\Facades\System.Xml.XPath.XDocument.dll</HintPath>
      </Reference>
+     <Reference Include="UnityEditor.UI">
+     <HintPath>C:\workspace\UnityPackageManagerGitPusher\Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
+     </Reference>
+     <Reference Include="UnityEngine.UI">
+     <HintPath>C:\workspace\UnityPackageManagerGitPusher\Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
+     </Reference>
      <Reference Include="UnityEngine.TestRunner">
      <HintPath>C:\workspace\UnityPackageManagerGitPusher\Library\ScriptAssemblies\UnityEngine.TestRunner.dll</HintPath>
      </Reference>
@@ -653,14 +659,6 @@
     <ProjectReference Include="Gemserk.UPMGitPusher.csproj">
       <Project>{888eabc4-d0c7-5b72-62f9-b52e1c9a1f05}</Project>
       <Name>Gemserk.UPMGitPusher</Name>
-    </ProjectReference>
-    <ProjectReference Include="UnityEditor.UI.csproj">
-      <Project>{ea66dadc-74a3-fecd-61f5-47ad91f9f9cc}</Project>
-      <Name>UnityEditor.UI</Name>
-    </ProjectReference>
-    <ProjectReference Include="UnityEngine.UI.csproj">
-      <Project>{2bcba8c3-a765-33f3-00a8-d03dda2bec98}</Project>
-      <Name>UnityEngine.UI</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

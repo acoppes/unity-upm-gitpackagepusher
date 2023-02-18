@@ -1,9 +1,5 @@
 {
   "dependencies": {
-    "com.unity.2d.animation": "5.2.0",
-    "com.unity.2d.pixel-perfect": "4.0.1",
-    "com.unity.2d.psdimporter": "4.3.0",
-    "com.unity.2d.sprite": "1.0.0",
     "com.unity.collab-proxy": "1.17.7",
     "com.unity.ide.rider": "3.0.18",
     "com.unity.ide.visualstudio": "2.0.17",
