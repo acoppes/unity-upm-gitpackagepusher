@@ -35,7 +35,9 @@ namespace Gemserk.UPMGitPusher.Editor
             
             if (Selection.activeObject is TextAsset textAsset)
             {
-                var path = AssetDatabase.GetAssetPath(textAsset);
+                var relativePath = AssetDatabase.GetAssetPath(textAsset);
+                var path = Path.GetFullPath(relativePath);
+                
                 if (path.EndsWith(PackageFileName))
                 {
                     Debug.Log($"Exporting package from selection");
@@ -52,7 +54,13 @@ namespace Gemserk.UPMGitPusher.Editor
                 }
 
                 publishDataList = publishDataAsset.packageFiles
-                    .Select(p => GetPublishData(AssetDatabase.GetAssetPath(p), p)).ToList();
+                    .Select(p =>
+                    {
+                        var relativePath = AssetDatabase.GetAssetPath(p);
+                        var path = Path.GetFullPath(relativePath);
+                        
+                        return GetPublishData(path, p);
+                    }).ToList();
             }
             else
             {
@@ -129,16 +137,15 @@ namespace Gemserk.UPMGitPusher.Editor
             publishData.newVersion = new Version(version.Major, version.Minor, version.Build + 1);
             Debug.Log($"Changing version from {version} to {publishData.newVersion}");
 
-            var packageAsset = AssetDatabase.LoadAssetAtPath<TextAsset>(publishData.pathToJson);
-            var newText = packageAsset.text.Replace(
+            var packageAsset = File.ReadAllText(publishData.pathToJson);
+            var newText = packageAsset.Replace(
                 $"\"{publishData.package.version}\"", 
                 $"\"{publishData.newVersion}\"");
 
             if (!Preferences.dryRun)
             {
                 File.WriteAllText(publishData.pathToJson, newText);
-            
-                EditorUtility.SetDirty(packageAsset);
+                // EditorUtility.SetDirty(packageAsset);
                 AssetDatabase.Refresh();
             }
             else
