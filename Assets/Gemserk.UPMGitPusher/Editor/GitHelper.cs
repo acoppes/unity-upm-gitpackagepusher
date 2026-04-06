@@ -25,6 +25,7 @@ namespace Gemserk.UPMGitPusher.Editor
 
             if (options.dryRun)
             {
+                Debug.Log($"git {gitCommand}");
                 return $"git {gitCommand}";
             }
 
