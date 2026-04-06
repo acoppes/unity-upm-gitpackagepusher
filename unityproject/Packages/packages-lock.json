@@ -1,5 +1,11 @@
 {
   "dependencies": {
+    "com.gemserk.upmgitpusher": {
+      "version": "file:C:/workspace/UnityPackageManagerGitPusher/packages/com.gemserk.upmgitpusher",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {}
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,
